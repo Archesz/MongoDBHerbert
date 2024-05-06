@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+import utils
 
 uri = "mongodb+srv://Arches:Giovana12@herbert.vp2ett8.mongodb.net/"
 
@@ -28,14 +29,91 @@ class Database():
             collection.insert_many(students)
         except Exception as e:
             raise Exception("Erro ao adicionar os estudantes.")
-#try:
-#    database = client.get_database("sample_mflix")
-#    movies = database.get_collection("movies")
-    # Query for a movie that has the title 'Back to the Future'
-    # query = { "title": "The Great Train Robbery" }
-    # movie = movies.find_one(query)
-    # print(movie)
-    # client.close()
+        
+    def updateStudent(self, cpf, value):
+        query_filter = {"cpf": cpf}
+        update_operation = {"$set": 
+                            {"Simulados": value}
+                            }
+        collection = self.database.get_collection("Alunos")
+        collection.update_one(query_filter, update_operation)    
+        print(f"Alterado - {cpf}.")
 
-# except Exception as e:
-#     raise Exception("Erro ao encontar o documento.")
+    def removeDuplicateStudents(self):
+        try:
+            collection = self.database.get_collection("Alunos")
+            pipeline = [
+                {"$match": {"cpf": {"$ne": False}}},
+                {"$group": {"_id": "$cpf", "unique_ids": {"$addToSet": "$_id"}, "count": {"$sum": 1}}},
+                {"$match": {"count": {"$gt": 1}}}
+            ]
+            duplicates = list(collection.aggregate(pipeline))
+            for duplicate in duplicates:
+                del duplicate['unique_ids'][0]
+                collection.delete_many({"_id": {"$in": duplicate['unique_ids']}})
+        except Exception as e:
+            print("Erro:", e)
+            
+    def insertSimuladoStudent(self, cpf, nome, respostas):
+        simulado = utils.calcularMetricas(respostas, nome)
+        
+        try:
+            query_filter = {"cpf": cpf}
+            update_operation = {"$set": 
+                                {f"Simulados.{nome}": simulado}
+                            }
+            collection = self.database.get_collection("Alunos")
+            collection.update_one(query_filter, update_operation)  
+        except:
+            print("Erro")
+            
+    def updateAllSimulados(self, nome):
+        try:
+            collection = self.database.get_collection("Alunos")
+            alunos = collection.find()
+            
+            for aluno in alunos:
+                simulados = aluno.get("Simulados", {})
+                if nome in simulados:
+                    respostas = aluno["Simulados"][nome]["Gabarito"]
+                    simulado_atualizado = utils.calcularMetricas(respostas, nome, flag=1)
+                    
+                    query_filter = {"_id": aluno["_id"]}
+                    update_operation = {"$set": {f"Simulados.{nome}": simulado_atualizado}}
+                    
+                    collection.update_one(query_filter, update_operation)
+        except Exception as e:
+            print("Erro:", e)
+            
+    def getSimulado(self, nome_simulado):
+        try:
+            collection = self.database.get_collection("Alunos")
+            alunos_com_simulado = {}
+            
+            # Iterar sobre os alunos e verificar se possuem o simulado
+            alunos = collection.find({"Simulados." + nome_simulado: {"$exists": True}})
+            for aluno in alunos:
+                simulado = aluno["Simulados"][nome_simulado]
+                aluno_com_simulado = {
+                    "cpf": aluno["cpf"],
+                    "nome": aluno["nome"], 
+                    "periodo": aluno["periodo"],
+                    "etnia": aluno["etnia"],
+                    "genero": aluno["genero"],
+                    "simulado": simulado
+                }
+                
+                alunos_com_simulado[aluno["cpf"]] = aluno_com_simulado
+            
+            return alunos_com_simulado
+            
+        except Exception as e:
+            print("Erro:", e)
+            
+    def findStudent(self, cpf):
+        try:
+            collection = self.database.get_collection("Alunos")
+            student = collection.find_one({"cpf": cpf})
+            return student
+        except Exception as e:
+            print("Erro:", e)

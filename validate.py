@@ -21,7 +21,7 @@ def validar_cpf(cpf):
     digito2 = 11 - resto if resto >= 2 else 0
 
     if int(cpf[9]) == digito1 and int(cpf[10]) == digito2:
-        return True
+        return cpf
     else:
         return False
     
@@ -29,7 +29,7 @@ def validar_celular(numero):
     padrao = re.compile(r'^\d{11}$')
 
     if padrao.match(numero):
-        return True
+        return numero
     else:
         return False
     
@@ -37,7 +37,7 @@ def validar_email(email):
     padrao = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
 
     if padrao.match(email):
-        return True
+        return email
     else:
         return False
     
@@ -45,6 +45,6 @@ def validar_cep(cep):
     padrao = re.compile(r'^\d{8}$')
 
     if padrao.match(cep):
-        return True
+        return cep
     else:
         return False
