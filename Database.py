@@ -91,7 +91,7 @@ class Database():
             alunos_com_simulado = {}
             
             # Iterar sobre os alunos e verificar se possuem o simulado
-            alunos = collection.find({"Simulados." + nome_simulado: {"$exists": True}})
+            alunos = collection.find({"Simulados." + nome_simulado: {"$exists": True, "$ne": None}})
             for aluno in alunos:
                 simulado = aluno["Simulados"][nome_simulado]
                 aluno_com_simulado = {
@@ -109,7 +109,22 @@ class Database():
             
         except Exception as e:
             print("Erro:", e)
+    
+    def getNomeCpfDict(self):
+        try:
+            collection = self.database.get_collection("Alunos")
+            nome_cpf_dict = {}
             
+            # Iterar sobre os alunos e construir o dicionário
+            alunos = collection.find({}, {"nome": 1, "cpf": 1})
+            for aluno in alunos:
+                nome_cpf_dict[aluno["nome"]] = aluno["cpf"]
+            
+            return nome_cpf_dict
+            
+        except Exception as e:
+            print("Erro:", e)
+    
     def findStudent(self, cpf):
         try:
             collection = self.database.get_collection("Alunos")
@@ -117,3 +132,32 @@ class Database():
             return student
         except Exception as e:
             print("Erro:", e)
+            
+    # Funções para a parte de simulados
+    def insertSimulado(self, simulado):
+        try:
+            collection = self.database.get_collection("Simulados")
+            collection.insert_one(simulado)
+        except Exception as e:
+            raise Exception("Erro:", e)
+    
+    def findSimulado(self, nome):
+        try:
+            collection = self.database.get_collection("Simulados")
+            simulado = collection.find_one({"Nome": nome})
+            return simulado
+        except Exception as e:
+            raise Exception("Erro:", e)
+
+    def updateSimulados(self, simulado):
+        nome = simulado["Nome"]
+        try:
+            collection = self.database.get_collection("Simulados")
+
+            query_filter = {"Nome": nome}
+            update_operation = {"$set": simulado}
+            collection.update_one(query_filter, update_operation)
+            
+        except Exception as e:
+            print("Erro:", e)
+    
