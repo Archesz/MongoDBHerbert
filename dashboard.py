@@ -30,7 +30,7 @@ app.layout = html.Div([
     html.Div(id='dd-table-5'),
     html.H2(children="Por aluno"),
     dcc.Dropdown(students_list, id="select_students", value=students_list[0]),
-    html.Div(id="dd-bar-1")
+    html.Div(id="dd-bar-1"),
 
 ], style={"display": "flex", "flexDirection": "column", "box-sizing": "border-box", "padding": "20px"})
 

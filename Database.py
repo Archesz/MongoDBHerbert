@@ -161,3 +161,11 @@ class Database():
         except Exception as e:
             print("Erro:", e)
     
+    def cadastrarProfessor(self, prof):
+        try:
+            collection = self.database.get_collection("Professores")
+            collection.insert_one(prof)
+        except Exception as e:
+            raise Exception("Erro:", e)
+        
+        
