@@ -81,7 +81,7 @@ agents = {
 }
 
 betinho = Betinho()
-betinho.setModel(agents["Betinho"], alunos["Nadia"])
+betinho.setModel(agents["Betinho"], alunos["Paulista"])
 betinho.createModel()
 
 app = Flask(__name__)
