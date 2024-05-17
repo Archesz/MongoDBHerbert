@@ -6,8 +6,8 @@ from simulados import simulados
 import utils
 import validate as pv
 
-with open('alunos_atualizados.json', 'r', encoding="utf-8") as arquivo:
-    dados = json.load(arquivo)
+#with open('alunos_atualizados.json', 'r', encoding="utf-8") as arquivo:
+#    dados = json.load(arquivo)
 
 def recadastrar(dados, database):
     for i, data in enumerate(dados.values()):

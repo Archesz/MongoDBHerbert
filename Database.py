@@ -71,20 +71,19 @@ class Database():
         try:
             collection = self.database.get_collection("Alunos")
             alunos = collection.find()
-            
             for aluno in alunos:
-                simulados = aluno.get("Simulados", {})
-                if nome in simulados:
-                    respostas = aluno["Simulados"][nome]["Gabarito"]
+                if "Simulados" in aluno and nome in aluno["Simulados"]:
+                    simulado = aluno["Simulados"][nome]
+                    if simulado and "Gabarito" in simulado:
+                        respostas = simulado["Gabarito"]
                     simulado_atualizado = utils.calcularMetricas(respostas, nome, flag=1)
-                    
                     query_filter = {"_id": aluno["_id"]}
                     update_operation = {"$set": {f"Simulados.{nome}": simulado_atualizado}}
-                    
+            #        
                     collection.update_one(query_filter, update_operation)
         except Exception as e:
             print("Erro:", e)
-            
+
     def getSimulado(self, nome_simulado):
         try:
             collection = self.database.get_collection("Alunos")
@@ -160,6 +159,8 @@ class Database():
             
         except Exception as e:
             print("Erro:", e)
+            
+
     
     def cadastrarProfessor(self, prof):
         try:
