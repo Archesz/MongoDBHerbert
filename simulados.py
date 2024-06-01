@@ -17,7 +17,7 @@ simulados = {
             "Filosofia": 0
         },
         "Gabarito": {
-            "1": {"Resposta": "D", "Disciplina": "Português", "Conteudo": ["Funções da Linguagem", "Morfologia"]},
+            "1": {"Resposta": "D", "Disciplina": "Português", "Conteudo": ['Interpretação de texto', 'Figuras de linguagem: aspecto semântico']},
             "2": {"Resposta": "A", "Disciplina": "Português", "Conteudo": ["Morfologia", "Concordância Verbal"]},
             "3": {"Resposta": "A", "Disciplina": "Português", "Conteudo": ["Funções da Linguagem", "Variação Linguística"]},
             "4": {"Resposta": "C", "Disciplina": "Português", "Conteudo": ["Figuras de Linguagem", "Morfologia", "Verbos"]},
@@ -25,9 +25,9 @@ simulados = {
             "6": {"Resposta": "D", "Disciplina": "Física", "Conteudo": ["Movimento uniforme", "Matemática Básica", "Porcentagem"]},
             "7": {"Resposta": "B", "Disciplina": "Física", "Conteudo": ["Ondulatória", "Movimento Uniforme"]},
             "8": {"Resposta": "E", "Disciplina": "Física", "Conteudo": ["Eletricidade", "Gráficos"]},
-            "9": {"Resposta": "E", "Disciplina": "Matemática", "Conteudo": ["Geometria Espacial", "Volume"]},
-            "10": {"Resposta": "A", "Disciplina": "Matemática", "Conteudo": ["Medidas de Centralidade e Dispersão", "Tabela"]},
-            "11": {"Resposta": "B", "Disciplina": "Matemática", "Conteudo": ["Matemática Básica", "Adição e Subtração", "Potenciação", "Radiciação"]},
+            "9": {"Resposta": "E", "Disciplina": "Matemática", "Conteudo": ["Cilindros", "Polígonos"]},
+            "10": {"Resposta": "A", "Disciplina": "Matemática", "Conteudo": ["Estatística: Visão geral, Organização e Representação de dados", "Estatística: Médias, Medidas de tendência central e de dispersão"]},
+            "11": {"Resposta": "B", "Disciplina": "Matemática", "Conteudo": ["As quatro operações e Expressões numéricas", ]},
             "12": {"Resposta": "B", "Disciplina": "Matemática", "Conteudo": ["Porcentagem", "Matemática Financeira"]},
             "13": {"Resposta": "C", "Disciplina": "Matemática", "Conteudo": ["Função do 1º Grau", "Gráficos", "Tabela"]},
             "14": {"Resposta": "B", "Disciplina": "Geografia", "Conteudo": ["Conceitos em Geografia e Introdução à Demografia", "Migrações"]},
